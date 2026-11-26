@@ -45,7 +45,7 @@ const aliResponses = {
 
 function mockFetch(url, opt) {
   callLog.push({ method: opt.method, url });
-  if (url.includes('quark') || url.includes('drive.uc.cn')) {
+  if (url.includes('quark') || url.includes('uc.cn')) {
     if (url.includes('/share/sharepage/token')) return jsonResp(quarkResponses.token);
     if (url.includes('/share/sharepage/detail')) {
       if (url.includes('pdir_fid=0')) return jsonResp(quarkResponses.detailRoot);
@@ -53,7 +53,7 @@ function mockFetch(url, opt) {
       if (url.includes('pdir_fid=d2')) return jsonResp(quarkResponses.detailB);
       return jsonResp({ code: 0, data: { list: [] } });
     }
-    if (url.includes('/share/sharepage/download')) {
+    if (url.includes('/file/share/download')) {
       const body = JSON.parse(opt.body);
       return jsonResp({ code: 0, data: [{ download_url: 'https://cdn.quark.example/' + body.fids[0] }] });
     }

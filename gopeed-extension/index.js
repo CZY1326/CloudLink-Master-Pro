@@ -13,8 +13,8 @@ var QUARK_UA =
 var PC_UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';
 
-var QUARK_BASE = 'https://drive.quark.cn/1/clouddrive';
-var UC_BASE = 'https://drive.uc.cn/1/clouddrive';
+var QUARK_BASE = 'https://drive-pc.quark.cn/1/clouddrive';
+var UC_BASE = 'https://pc-api.uc.cn/1/clouddrive';
 var ALI_API = 'https://api.alipan.com';
 
 /* ---------------- 基础工具 ---------------- */
@@ -123,16 +123,20 @@ function quarkUcResolve(ctx, kind) {
     var chain = Promise.resolve();
     out.forEach(function (f) {
       chain = chain.then(function () {
-        return httpJSON('POST', base + '/share/sharepage/download?pr=' + pr + '&fr=pc',
+        return httpJSON('POST', base + '/file/share/download?pr=' + pr + '&fr=pc',
           { fids: [f.fid], pwd_id: pwdId, stoken: stoken }, apiHeaders
         ).then(function (r) {
           var d = r.data || {};
           if (d.code !== 0) {
-            throw new Error(
-              panName + '：获取「' + f.name + '」直链失败（code=' + (d.code || r.status) + '）' +
-              (d.message ? '：' + d.message : '') +
-              (d.code === 429 || /频繁/.test(d.message || '') ? '，接口限流，请稍后重试或减少单次解析数量' : '')
-            );
+            var msg = panName + '：获取「' + f.name + '」直链失败（code=' + (d.code || r.status) + '）' +
+              (d.message ? '：' + d.message : '');
+            if (d.code === 31001 || /require login/i.test(d.message || '')) {
+              msg = panName + '：该分享需要登录后才能下载（未登录访客仅放行单张图片预览）。' +
+                '请在扩展设置里填写已登录 ' + panName + ' 网页版的 Cookie，然后重新解析';
+            } else if (d.code === 429 || /频繁/.test(d.message || '')) {
+              msg += '，接口限流，请稍后重试或减少单次解析数量';
+            }
+            throw new Error(msg);
           }
           var item = (d.data || [])[0];
           if (!item || !item.download_url) {
