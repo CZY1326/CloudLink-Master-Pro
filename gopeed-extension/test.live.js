@@ -15,7 +15,7 @@ if (!url) {
 
 const sandbox = {
   gopeed: {
-    settings: { quarkCookie: '', ucCookie: '', maxFiles: 50 },
+    settings: { quarkCookie: process.env.QK_COOKIE || '', ucCookie: process.env.UC_COOKIE || '', maxFiles: 50 },
     events: { _handler: null, onResolve(fn) { this._handler = fn; } },
     logger: {
       debug: (...a) => console.log('[debug]', ...a),
