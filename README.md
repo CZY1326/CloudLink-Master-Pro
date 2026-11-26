@@ -52,6 +52,18 @@ CloudLink Master Pro 是一个 Tampermonkey / Violentmonkey 用户脚本，批�
 3. 选择出口：复制直链、推送到下载器（RPC/IDM/Gopeed/ABDM）、增强下载、网页下载、导出 TXT……
 4. 首次使用建议先到 **设置** 里配置下载器地址 / 端口 / 密钥，点 **测试连接** 验证
 
+## Gopeed 扩展（无需浏览器）
+
+`gopeed-extension/` 目录包含一个 **Gopeed 原生扩展**（逻辑与用户脚本同源）：把 **夸克 / UC / 阿里云盘(Alipan)** 的分享链接直接解析为 Gopeed 下载任务，支持提取码（`?pwd=xxx`）与子目录递归，自动附带下载所需的 UA / Referer / Cookie。
+
+安装方式（Gopeed → 扩展页面）：
+
+```
+https://github.com/CZY1326/CloudLink-Master-Pro#gopeed-extension
+```
+
+本地调试可开启 Gopeed 开发者模式（扩展页面连续点击 5 次安装按钮）后选择 `gopeed-extension/` 目录。运行本地回归测试：`node gopeed-extension/test.local.js`。
+
 ## 免责声明
 
 本项目仅供学习交流与技术演示使用。使用本脚本产生的任何下载行为，请遵守当地法律法规及各网盘平台的服务条款；由此产生的一切后果由使用者自行承担。请勿用于商业用途或大规模分发受版权保护的文件。
