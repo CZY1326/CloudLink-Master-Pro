@@ -74,7 +74,7 @@ function mockFetch(url, opt) {
   return jsonResp({ error: 'unmocked: ' + url });
 }
 
-/* ---- gopeed 环境桩 ---- */
+/* ---- gopeed 环境桩（故意不提供 URL/URLSearchParams，模拟 Gopeed goja 运行时） ---- */
 const sandbox = {
   gopeed: {
     settings: { quarkCookie: '', ucCookie: '', maxFiles: 500 },
@@ -82,7 +82,6 @@ const sandbox = {
     logger: { debug: () => {}, info: () => {}, warn: () => {}, error: () => {} }
   },
   fetch: mockFetch,
-  URL,
   Promise,
   Error,
   isFinite,
@@ -98,6 +97,8 @@ vm.runInNewContext(code, sandbox, { filename: 'index.js' });
 
 const onResolve = sandbox.gopeed.events._handler;
 if (typeof onResolve !== 'function') throw new Error('onResolve 未注册！');
+const pickPasscode = sandbox.pickPasscode;
+if (typeof pickPasscode !== 'function') throw new Error('pickPasscode 未暴露！');
 
 let failed = 0;
 function check(name, cond, extra) {
@@ -134,33 +135,15 @@ function check(name, cond, extra) {
   check('直链来自 get_download_url', r.files.every((f) => f.req.url.startsWith('https://dl.example/')));
   check('下载头带 UA/Referer', !!r.files[0].req.extra.header.Referer);
 
-  /* ---- 提取码解析 ---- */
+  /* ---- 提取码解析（直接测真实 pickPasscode，纯字符串解析） ---- */
   console.log('[4] 提取码解析');
-  const u1 = new URL('https://pan.quark.cn/s/abc#/list/share?pwd=9999');
-  const u2 = new URL('https://pan.quark.cn/s/abc#(7777)');
-  const u3 = new URL('https://www.alipan.com/s/abc?pwd=1234');
-  const pc = code; // 仅占位
-  check('query pwd', pickPasscodeOf(u1) === '9999');
-  check('hash 纯码 #(7777)', pickPasscodeOf(u2) === '7777');
-  check('阿里 ?pwd=', pickPasscodeOf(u3) === '1234');
-
-  function pickPasscodeOf(u) {
-    const q = u.searchParams;
-    const arr = [];
-    if (q.get('pwd')) arr.push(q.get('pwd'));
-    if (q.get('passcode')) arr.push(q.get('passcode'));
-    if (q.get('code')) arr.push(q.get('code'));
-    const h = u.hash || '';
-    const m = h.match(/(?:^|[?&#])(?:pwd|passcode|code)=([^&]+)/i);
-    if (m) arr.push(m[1]);
-    const m2 = h.replace(/^#\/?/, '').match(/^\(?([^/?&()]+)\)?$/);
-    if (m2 && /^[a-zA-Z0-9]{1,12}$/.test(m2[1])) arr.push(m2[1]);
-    for (let i = 0; i < arr.length; i++) {
-      const c = String(arr[i]).trim();
-      if (c) return c;
-    }
-    return '';
-  }
+  check('query pwd', pickPasscode('https://pan.quark.cn/s/abc?pwd=9999') === '9999', pickPasscode('https://pan.quark.cn/s/abc?pwd=9999'));
+  check('hash ?pwd=', pickPasscode('https://pan.quark.cn/s/abc#/list/share?pwd=8888') === '8888', pickPasscode('https://pan.quark.cn/s/abc#/list/share?pwd=8888'));
+  check('hash 纯码 #(7777)', pickPasscode('https://pan.quark.cn/s/abc#(7777)') === '7777', pickPasscode('https://pan.quark.cn/s/abc#(7777)'));
+  check('hash 裸码 #abcd', pickPasscode('https://pan.quark.cn/s/abc#/abcd') === 'abcd', pickPasscode('https://pan.quark.cn/s/abc#/abcd'));
+  check('阿里 ?pwd=', pickPasscode('https://www.alipan.com/s/abc?pwd=1234') === '1234', pickPasscode('https://www.alipan.com/s/abc?pwd=1234'));
+  check('无提取码返回空', pickPasscode('https://pan.quark.cn/s/abc') === '', pickPasscode('https://pan.quark.cn/s/abc'));
+  check('passcode 参数', pickPasscode('https://drive.uc.cn/s/abc?passcode=xy12') === 'xy12', pickPasscode('https://drive.uc.cn/s/abc?passcode=xy12'));
 
   /* ---- 不支持的链接 ---- */
   console.log('[5] 不支持的链接应报错');

@@ -49,19 +49,21 @@ async function httpJSON(method, url, body, headers) {
   return { status: resp.status, data: data, text: text };
 }
 
-/* 从 URL 提取提取码：query 的 pwd/passcode/code，以及 hash（夸克链接常为 #/xxx?pwd=yyy） */
-function pickPasscode(u) {
+/* 从链接提取提取码：query 的 pwd/passcode/code，以及 hash（夸克链接常为 #/xxx?pwd=yyy）。
+ * 注意：Gopeed 的 goja 运行时没有 URL/URLSearchParams，必须用纯字符串解析。 */
+function pickPasscode(rawUrl) {
+  var url = String(rawUrl || '');
   var codes = [];
   try {
-    var q = u.searchParams;
-    if (q.get('pwd')) codes.push(q.get('pwd'));
-    if (q.get('passcode')) codes.push(q.get('passcode'));
-    if (q.get('code')) codes.push(q.get('code'));
-    var h = u.hash || '';
-    var m = h.match(/(?:^|[?&#])(?:pwd|passcode|code)=([^&]+)/i);
-    if (m) codes.push(m[1]);
+    var qStart = url.indexOf('?');
+    var hStart = url.indexOf('#');
+    var query = qStart >= 0 ? (hStart > qStart ? url.slice(qStart + 1, hStart) : url.slice(qStart + 1)) : '';
+    var hash = hStart >= 0 ? url.slice(hStart) : '';
+    var paramRe = /(?:^|[?&#])(?:pwd|passcode|code)=([^&#]+)/gi;
+    var m;
+    while ((m = paramRe.exec(query + hash))) codes.push(m[1]);
     /* 夸克样式：#/提取码（hash 是纯码或括号包裹） */
-    var m2 = h.replace(/^#\/?/, '').match(/^\(?([^/?&()]+)\)?$/);
+    var m2 = hash.replace(/^#\/?/, '').match(/^\(?([^/?&()]+)\)?$/);
     if (m2 && /^[a-zA-Z0-9]{1,12}$/.test(m2[1])) codes.push(m2[1]);
   } catch (e) {
     /* 忽略解析失败 */
@@ -88,11 +90,10 @@ function quarkUcResolve(ctx, kind) {
   var panName = isQuark ? '夸克网盘' : 'UC网盘';
   var cookie = String(cfg(isQuark ? 'quarkCookie' : 'ucCookie', '')).trim();
 
-  var u = new URL(ctx.req.url);
-  var m = u.pathname.match(/\/s\/([a-zA-Z0-9]+)/);
+  var m = String(ctx.req.url || '').match(/\/s\/([a-zA-Z0-9]+)/);
   if (!m) throw new Error(panName + '：未识别到分享 ID，请确认是分享链接（…/s/xxxx）');
   var pwdId = m[1];
-  var passcode = pickPasscode(u);
+  var passcode = pickPasscode(ctx.req.url);
 
   var apiHeaders = {
     'Content-Type': 'application/json;charset=UTF-8',
@@ -211,11 +212,10 @@ function quarkUcResolve(ctx, kind) {
 
 function aliResolve(ctx) {
   var referer = 'https://www.alipan.com/';
-  var u = new URL(ctx.req.url);
-  var m = u.pathname.match(/\/s\/([a-zA-Z0-9]+)/);
+  var m = String(ctx.req.url || '').match(/\/s\/([a-zA-Z0-9]+)/);
   if (!m) throw new Error('阿里云盘：未识别到分享 ID，请确认是分享链接（…/s/xxxx）');
   var shareId = m[1];
-  var pwd = pickPasscode(u);
+  var pwd = pickPasscode(ctx.req.url);
 
   var listHeaders = {
     'Content-Type': 'application/json;charset=UTF-8',
@@ -334,9 +334,17 @@ function buildRes(files, resName, dlHeaders) {
 /* ---------------- 事件入口 ---------------- */
 
 gopeed.events.onResolve(async function (ctx) {
-  var url = ctx.req.url || '';
-  if (/pan\.quark\.cn/i.test(url)) return quarkUcResolve(ctx, 'quark');
-  if (/drive\.uc\.cn/i.test(url)) return quarkUcResolve(ctx, 'uc');
-  if (/(alipan|aliyundrive)\.com/i.test(url)) return aliResolve(ctx);
-  throw new Error('CloudLink Master：不支持的链接。目前支持夸克 / UC / 阿里云盘(alipan) 的分享链接');
+  try {
+    var url = ctx.req.url || '';
+    if (/pan\.quark\.cn/i.test(url)) return await quarkUcResolve(ctx, 'quark');
+    if (/drive\.uc\.cn/i.test(url)) return await quarkUcResolve(ctx, 'uc');
+    if (/(alipan|aliyundrive)\.com/i.test(url)) return await aliResolve(ctx);
+    throw new Error('CloudLink Master：不支持的链接。目前支持夸克 / UC / 阿里云盘(alipan) 的分享链接');
+  } catch (e) {
+    /* 解析失败必须留痕：Gopeed 对解析器报错会静默回退成普通下载，没有日志排查不到 */
+    if (gopeed.logger && gopeed.logger.error) {
+      gopeed.logger.error('[CloudLink Master] resolve failed: ' + url + ' -> ' + (e && e.message ? e.message : e));
+    }
+    throw e;
+  }
 });

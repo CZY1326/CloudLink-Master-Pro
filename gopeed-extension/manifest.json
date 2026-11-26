@@ -4,7 +4,7 @@
   "title": "CloudLink Master · 网盘直链解析",
   "description": "把 夸克网盘 / UC网盘 / 阿里云盘(Alipan) 的分享链接直接解析为 Gopeed 下载任务：支持提取码、子目录递归、批量文件，自动附带下载所需 UA/Referer。CloudLink Master Pro 用户脚本的 Gopeed 原生移植版。",
   "icon": "",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage": "https://github.com/CZY1326/CloudLink-Master-Pro",
   "repository": {
     "url": "https://github.com/CZY1326/CloudLink-Master-Pro",
