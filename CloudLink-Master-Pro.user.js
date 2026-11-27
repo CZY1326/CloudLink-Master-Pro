@@ -499,6 +499,7 @@
         zh: {
             ballTip: '（Alt+D）', menuOpen: '打开',
             tRefresh: '重新解析', tHistory: '下载历史', tSettings: '设置', tClose: '关闭',
+            tGithub: 'GitHub 仓库', tSite: '项目主页（使用教程）',
             langTip: 'Language / 切换语言',
             bParse: '解析当前列表', bChecked: '解析页面勾选',
             bCopyAll: '复制全部直链', bRpcAll: '推送全部到 RPC',
@@ -659,6 +660,7 @@
         en: {
             ballTip: ' (Alt+D)', menuOpen: 'Open',
             tRefresh: 'Re-parse', tHistory: 'Download history', tSettings: 'Settings', tClose: 'Close',
+            tGithub: 'GitHub repository', tSite: 'Docs site (guide)',
             langTip: 'Language / 切换语言',
             bParse: 'Parse list', bChecked: 'Parse checked',
             bCopyAll: 'Copy all links', bRpcAll: 'Push all to RPC',
@@ -2341,6 +2343,8 @@ tbody input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--ac
         <span class="tag" data-ref="tag">-</span>
         <span class="tag" data-ref="kind">-</span>
         <div class="grow"></div>
+        <button class="icon-btn" data-act="github" title="${T('tGithub')}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.05.78 2.12 0 1.54-.01 2.78-.01 3.16 0 .31.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></button>
+        <button class="icon-btn" data-act="site" title="${T('tSite')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></button>
         <button class="icon-btn lang-btn" data-act="lang" title="${T('langTip')}">${Store.get('lang') === 'en' ? '中' : 'EN'}</button>
         <button class="icon-btn" data-act="refresh" title="${T('tRefresh')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
         <button class="icon-btn" data-act="history" title="${T('tHistory')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></button>
@@ -2403,6 +2407,8 @@ tbody input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--ac
                 const act = t.getAttribute('data-act');
                 if (act === 'close') return this.close();
                 if (act === 'lang') return this.toggleLang();
+                if (act === 'github') return GM_openInTab('https://github.com/CZY1326/CloudLink-Master-Pro', { active: true });
+                if (act === 'site') return GM_openInTab('https://czy1326.github.io/CloudLink-Master-Pro/' + (Store.get('lang') === 'en' ? '#english' : ''), { active: true });
                 if (act === 'settings') return Settings.open();
                 if (act === 'refresh') return guard(App.parse('list'));
                 if (act === 'parse') return guard(App.parse('list'));
