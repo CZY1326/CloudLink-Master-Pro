@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CloudLink Master Pro
 // @namespace    https://github.com/CZY1326/CloudLink-Master-Pro
-// @version      1.0.2
+// @version      1.0.3
 // @author       Lucian-Cosmo & WorkBuddy
 // @icon         https://raw.githubusercontent.com/CZY1326/CloudLink-Master-Pro/main/docs/assets/icon.png
 // @updateURL    https://raw.githubusercontent.com/CZY1326/CloudLink-Master-Pro/main/CloudLink-Master-Pro.user.js
@@ -515,10 +515,11 @@
             langTip: 'Language / 切换语言',
             bParse: '解析当前列表', bChecked: '解析页面勾选',
             bCopyAll: '复制全部直链', bRpcAll: '推送全部到 RPC',
-            bRpcIdm: '全部推送到 IDM', bRpcGopeed: '全部推送到 Gopeed',
+            bRpcIdm: '全部推送到 IDM', bRpcGopeed: '全部推送到 Gopeed', bRpcAbdm: '全部推送到 ABDM',
             tRpcAll: '推送到 Aria2/Motrix（JSON-RPC）',
             tRpcIdm: '逐条直推给 IDM（127.0.0.1:1001）',
             tRpcGopeed: '推送到 Gopeed（REST API）',
+            tRpcAbdm: '推送到 AB Download Manager（HTTP API）',
             bEnhance: '增强下载',
             tEnhance: '脚本内分片并发下载：多线程 + 智能分块 + 进度，无需任何下载软件；任务进行中再点一次可取消',
             bPageDl: '网页下载',
@@ -676,10 +677,11 @@
             langTip: 'Language / 切换语言',
             bParse: 'Parse list', bChecked: 'Parse checked',
             bCopyAll: 'Copy all links', bRpcAll: 'Push all to RPC',
-            bRpcIdm: 'Push all to IDM', bRpcGopeed: 'Push all to Gopeed',
+            bRpcIdm: 'Push all to IDM', bRpcGopeed: 'Push all to Gopeed', bRpcAbdm: 'Push all to ABDM',
             tRpcAll: 'Push to Aria2/Motrix (JSON-RPC)',
             tRpcIdm: 'Push directly to IDM (127.0.0.1:1001)',
             tRpcGopeed: 'Push to Gopeed (REST API)',
+            tRpcAbdm: 'Push to AB Download Manager (HTTP API)',
             bEnhance: 'Enhanced download',
             tEnhance: 'In-browser chunked concurrent download: multi-thread + adaptive chunks + progress, no downloader app needed; click again while running to cancel',
             bPageDl: 'Web download',
@@ -2544,9 +2546,11 @@ tbody input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--ac
             if (allBtn) {
                 allBtn.textContent = rpcType === 'idm' ? T('bRpcIdm')
                     : rpcType === 'gopeed' ? T('bRpcGopeed')
+                    : rpcType === 'abdm' ? T('bRpcAbdm')
                     : T('bRpcAll');
                 allBtn.title = rpcType === 'idm' ? T('tRpcIdm')
                     : rpcType === 'gopeed' ? T('tRpcGopeed')
+                    : rpcType === 'abdm' ? T('tRpcAbdm')
                     : T('tRpcAll');
             }
         },
@@ -2866,6 +2870,7 @@ tbody input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--ac
                     Store.reset();
                     UI.refs.wrap.classList.toggle('dark', UI.isDark());
                     this.open();
+                    UI.updateMeta(); /* 重置后 rpcType 回到默认 aria2，同步工具栏按钮文案 */
                     UI.toast(T('mResetDone'), 'ok');
                 }
             };
@@ -2928,6 +2933,7 @@ tbody input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--ac
                 });
                 urlPreview();
                 syncHints();
+                UI.updateMeta(); /* 立即同步工具栏“推送全部”按钮文案/提示，无需叉掉面板重开 */
                 UI.toast(TF('mSwitched', { name: typeName(next) }), 'ok');
             };
             /* 按下载器类型刷新各行的提示文案（IDM 没有 HTTP 路径概念，重点解释端口） */
