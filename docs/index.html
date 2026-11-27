@@ -205,6 +205,25 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:30px 0 44px;colo
          data-en="Quark enforces login for resolving and downloading, so the extension needs your login Cookie. Same method works for UC (drive.uc.cn).">
       夸克已强制登录才能解析直链和下载，扩展必须配置登录 Cookie。以下方法同样适用于 UC 网盘（drive.uc.cn）。</div>
 
+    <h3 style="margin-top:26px">方法 A：<a href="https://chromewebstore.google.com/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm" target="_blank">Cookie-Editor</a> 扩展一键抓取 <span class="tag script" data-zh="推荐 · 小白友好" data-en="Recommended · Easy">推荐 · 小白友好</span></h3>
+    <div class="sec-sub" data-zh="开源工具（<a href='https://github.com/Moustachauve/cookie-editor' target='_blank'>GitHub ↗</a>），点几下按钮就能拿到整串 Cookie，不用碰开发者工具。Chrome / Edge 通用。"
+         data-en="Open-source tool (<a href='https://github.com/Moustachauve/cookie-editor' target='_blank'>GitHub ↗</a>) — grab the full Cookie with a few clicks, no DevTools needed. Works in Chrome / Edge.">
+      开源工具（<a href='https://github.com/Moustachauve/cookie-editor' target='_blank'>GitHub ↗</a>），点几下按钮就能拿到整串 Cookie，不用碰开发者工具。Chrome / Edge 通用。</div>
+    <div class="steps">
+      <div class="step"><div class="no">1</div><div class="body" data-zh="安装 <a href='https://chromewebstore.google.com/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm' target='_blank'>Cookie-Editor 浏览器扩展 ↗</a>（Chrome 应用商店，Edge 会自动提示安装）。"
+           data-en="Install the <a href='https://chromewebstore.google.com/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm' target='_blank'>Cookie-Editor extension ↗</a> from the Chrome Web Store (Edge will offer it too).">安装 <a href='https://chromewebstore.google.com/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm' target='_blank'>Cookie-Editor 浏览器扩展 ↗</a>（Chrome 应用商店，Edge 会自动提示安装）。</div></div>
+      <div class="step"><div class="no">2</div><div class="body" data-zh="登录 <a href='https://pan.quark.cn' target='_blank'>pan.quark.cn ↗</a>，点击浏览器工具栏上的 <b>Cookie-Editor 图标</b>（饼干形状）。"
+           data-en="Log in to <a href='https://pan.quark.cn' target='_blank'>pan.quark.cn ↗</a>, click the <b>Cookie-Editor icon</b> (cookie shape) in the browser toolbar.">登录 <a href='https://pan.quark.cn' target='_blank'>pan.quark.cn ↗</a>，点击浏览器工具栏上的 <b>Cookie-Editor 图标</b>（饼干形状）。</div></div>
+      <div class="step"><div class="no">3</div><div class="body" data-zh="点右下角的 <b>Export</b> 按钮——下拉菜单里选择 <b>Header String</b> 格式（⚠️ 不要选 JSON），整串 Cookie 会自动复制到剪贴板。"
+           data-en="Click the <b>Export</b> button — choose <b>Header String</b> in the dropdown (⚠️ NOT JSON). The full Cookie string is copied to the clipboard.">点右下角的 <b>Export</b> 按钮——下拉菜单里选择 <b>Header String</b> 格式（⚠️ 不要选 JSON），整串 Cookie 会自动复制到剪贴板。</div></div>
+      <div class="step"><div class="no">4</div><div class="body" data-zh="粘贴到 Gopeed 扩展设置的 <b>夸克 Cookie</b> 输入框 → 保存 → <b>重启 Gopeed</b>。UC 网盘同理（Cookie-Editor 里选 Header String 后填入 UC Cookie）。"
+           data-en="Paste into the <b>Quark Cookie</b> field in extension settings → Save → <b>restart Gopeed</b>. Same flow for UC.">粘贴到 Gopeed 扩展设置的 <b>夸克 Cookie</b> 输入框 → 保存 → <b>重启 Gopeed</b>。UC 网盘同理（Cookie-Editor 里选 Header String 后填入 UC Cookie）。</div></div>
+    </div>
+    <div class="callout warn"><span class="ico">⚠️</span><span data-zh="Export 一定选 <b>Header String</b>：JSON 格式是给开发者备份用的，扩展只认 <code class='inline'>name=value; name=value</code> 这种分号分隔的字符串。"
+         data-en="Export must be <b>Header String</b>: JSON is for developer backups; the extension only accepts the semicolon-separated <code class='inline'>name=value; name=value</code> string.">Export 一定选 <b>Header String</b>：JSON 格式是给开发者备份用的，扩展只认 <code class='inline'>name=value; name=value</code> 这种分号分隔的字符串。</span></div>
+
+    <h3 style="margin-top:34px">方法 B：F12 开发者工具手动抓取</h3>
+
     <div class="steps">
       <div class="step"><div class="no">1</div><div class="body" data-zh="用 Chrome / Edge 登录 <a href='https://pan.quark.cn' target='_blank'>pan.quark.cn ↗</a>（建议无痕窗口，避免多余 Cookie 干扰）。"
            data-en="Log in to <a href='https://pan.quark.cn' target='_blank'>pan.quark.cn ↗</a> in Chrome / Edge (an incognito window keeps the Cookie clean).">用 Chrome / Edge 登录 <a href='https://pan.quark.cn' target='_blank'>pan.quark.cn ↗</a>（建议无痕窗口，避免多余 Cookie 干扰）。</div></div>
