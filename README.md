@@ -4,7 +4,7 @@
 
 > 语言 / Language: [简体中文](#中文) | [English](#english)
 
-> 🌐 **项目主页（含 Cookie 抓取图解教程、常见报错速查）**：<https://czy1326.github.io/CloudLink-Master-Pro/> · [English](https://czy1326.github.io/CloudLink-Master-Pro/#english)
+> 🌐 项目主页（Cookie 教程 · 报错速查）：<https://czy1326.github.io/CloudLink-Master-Pro/>
 
 ---
 
@@ -111,7 +111,7 @@ https://github.com/CZY1326/CloudLink-Master-Pro#gopeed-extension
 
 Everything runs **locally**: no ads, no license keys, no remote config server, no tracking.
 
-> 🌐 **Docs site (step-by-step Cookie guide, troubleshooting table)**: <https://czy1326.github.io/CloudLink-Master-Pro/#english>
+> 🌐 Docs site (Cookie guide & troubleshooting): <https://czy1326.github.io/CloudLink-Master-Pro/#english>
 
 ### 1. Userscript
 
