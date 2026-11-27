@@ -4,6 +4,8 @@
 
 > 语言 / Language: [简体中文](#中文) | [English](#english)
 
+> 🌐 **项目主页（含 Cookie 抓取图解教程、常见报错速查）**：<https://czy1326.github.io/CloudLink-Master-Pro/> · [English](https://czy1326.github.io/CloudLink-Master-Pro/#english)
+
 ---
 
 <a id="中文"></a>
@@ -75,7 +77,7 @@ https://github.com/CZY1326/CloudLink-Master-Pro#gopeed-extension
 
 | 设置项 | 说明 |
 |---|---|
-| **夸克 Cookie** | **必填**。夸克已强制登录才能取直链和下载（未登录报 31001）。F12 → 网络 → 任意请求 → 请求标头 Cookie 整串复制 |
+| **夸克 Cookie** | **必填**。夸克已强制登录才能取直链和下载（未登录报 31001）。推荐用 [Cookie-Editor](https://chromewebstore.google.com/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm) 扩展一键导出（选 Header String）；或 F12 → 网络 → 任意请求 → 请求标头 Cookie 整串复制。[详细图解 ↗](https://czy1326.github.io/CloudLink-Master-Pro/#cookie) |
 | UC Cookie | 可选，需要登录的分享才需要 |
 | 单次最多解析文件数 | 递归子目录时的文件总数上限，默认 500 |
 
@@ -109,6 +111,8 @@ https://github.com/CZY1326/CloudLink-Master-Pro#gopeed-extension
 
 Everything runs **locally**: no ads, no license keys, no remote config server, no tracking.
 
+> 🌐 **Docs site (step-by-step Cookie guide, troubleshooting table)**: <https://czy1326.github.io/CloudLink-Master-Pro/#english>
+
 ### 1. Userscript
 
 **Supported drives**: Baidu Netdisk ✅ (incl. share pages) · Alipan (Aliyun Drive) ✅ (incl. share pages) · Quark ✅ · UC Drive ✅ · Tianyi ☁️ list view · 123pan / Xunlei / China Mobile ⚗️ experimental
@@ -138,7 +142,7 @@ https://github.com/CZY1326/CloudLink-Master-Pro#gopeed-extension
 
 | Setting | Description |
 |---|---|
-| **Quark Cookie** | **Required**. Quark enforces login for direct links and downloads (guest requests fail with 31001). Copy the full Cookie string from DevTools → Network → any request → Request Headers |
+| **Quark Cookie** | **Required**. Quark enforces login for direct links and downloads (guest requests fail with 31001). Recommended: the [Cookie-Editor](https://chromewebstore.google.com/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm) extension, Export as **Header String**; or copy the full Cookie from DevTools → Network → any request → Request Headers. [Full guide ↗](https://czy1326.github.io/CloudLink-Master-Pro/#english) |
 | UC Cookie | Optional, only for login-required shares |
 | Max files per resolve | Recursion cap for sub-folders, default 500 |
 
