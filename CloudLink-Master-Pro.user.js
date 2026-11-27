@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CloudLink Master Pro
 // @namespace    https://github.com/CZY1326/CloudLink-Master-Pro
-// @version      1.0.1
+// @version      1.0.2
 // @author       Lucian-Cosmo & WorkBuddy
 // @icon         https://raw.githubusercontent.com/CZY1326/CloudLink-Master-Pro/main/docs/assets/icon.png
 // @updateURL    https://raw.githubusercontent.com/CZY1326/CloudLink-Master-Pro/main/CloudLink-Master-Pro.user.js
@@ -165,7 +165,14 @@
                 txt = String(r);
             }
         } catch (e) { txt = String(r); }
-        showFatal('异步异常：' + txt);
+        /* 归因启发：网盘页面（SPA）自身的未处理拒绝非常常见且多为空原因，
+           不能一律挂红条。只有栈里带 userscript/extension 标记、
+           或是没有任何页面 URL 的匿名栈，才归属本脚本并显示红条。 */
+        const st = (r instanceof Error) ? String(r.stack || '') : '';
+        const ours = /userscript|user-script|extension|content-script/i.test(st)
+            || (r instanceof Error && !/https?:\/\/|file:|chrome:|moz-extension:/i.test(st));
+        console.warn('[CLM] ' + (ours ? '未处理异步异常：' : '（页面自身的 Promise 拒绝，与本脚本无关）'), r);
+        if (ours) showFatal('异步异常：' + txt);
     });
 
     /* 异步入口兜底：未 catch 的 Promise 统一转成 toast + 控制台警告，不再静默 */
