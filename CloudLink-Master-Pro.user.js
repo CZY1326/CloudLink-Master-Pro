@@ -1,8 +1,9 @@
 // ==UserScript==
 // @name         CloudLink Master Pro
 // @namespace    https://github.com/CZY1326/CloudLink-Master-Pro
-// @version      1.0.0
+// @version      1.0.1
 // @author       Lucian-Cosmo & WorkBuddy
+// @icon         https://raw.githubusercontent.com/CZY1326/CloudLink-Master-Pro/main/docs/assets/icon.png
 // @updateURL    https://raw.githubusercontent.com/CZY1326/CloudLink-Master-Pro/main/CloudLink-Master-Pro.user.js
 // @downloadURL  https://raw.githubusercontent.com/CZY1326/CloudLink-Master-Pro/main/CloudLink-Master-Pro.user.js
 // @homepageURL  https://czy1326.github.io/CloudLink-Master-Pro/
