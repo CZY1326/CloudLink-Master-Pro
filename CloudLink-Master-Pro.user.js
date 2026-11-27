@@ -1,8 +1,10 @@
 // ==UserScript==
 // @name         CloudLink Master Pro
-// @namespace    https://local.netdisk.directlink
+// @namespace    https://github.com/CZY1326/CloudLink-Master-Pro
 // @version      1.0.0
 // @author       Lucian-Cosmo & WorkBuddy
+// @homepageURL  https://czy1326.github.io/CloudLink-Master-Pro/
+// @supportURL   https://github.com/CZY1326/CloudLink-Master-Pro/issues
 // @description  CloudLink Master Pro · 网盘直链解析与下载中枢：批量解析百度/阿里/夸克/UC/天翼/123 云盘文件直链（迅雷云盘、移动云盘实验性支持），一键推送 Aria2/Motrix RPC（批量+子目录还原）、Gopeed、IDM、ABDM、cURL、BitComet，或经网页下载页/增强分片下载在浏览器直接保存；支持下载历史、落地批量重命名、百度三通道兜底、夸克/UC 412 自愈与夸克签到领容量。全部逻辑本地运行：无广告、无授权码、无远程配置、不采集数据。
 // @license      MIT
 // @match        *://pan.baidu.com/*
