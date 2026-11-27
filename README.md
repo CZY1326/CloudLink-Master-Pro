@@ -49,7 +49,8 @@ CloudLink Master Pro 包含两个组件，共享同一套解析内核：
 ### 安装与使用
 
 1. 浏览器安装 [Tampermonkey](https://www.tampermonkey.net/)（或 Violentmonkey）
-2. 点击 `CloudLink-Master-Pro.user.js` → **Raw** 打开原始内容 → 确认安装
+2. 一键安装：点击 [CloudLink-Master-Pro.user.js（Raw 直链）](https://raw.githubusercontent.com/CZY1326/CloudLink-Master-Pro/main/CloudLink-Master-Pro.user.js) → Tampermonkey 自动弹出确认页 → 点 **安装** 即可
+   - 也可以打开 [仓库文件页](https://github.com/CZY1326/CloudLink-Master-Pro/blob/main/CloudLink-Master-Pro.user.js)，点右上 **Raw** 打开原始内容 → 确认安装
 3. 打开任一支持的网盘页面，右下角出现悬浮球；`Alt + D` 快捷开关面板
 4. 点 **解析当前列表** / **解析页面勾选**，选择下载出口即可；下载器地址 / 端口 / 密钥在 **设置** 里配置
 
@@ -126,7 +127,7 @@ Everything runs **locally**: no ads, no license keys, no remote config server, n
 - Batch rename rules (prefix / suffix / replace / regex) for saved files
 - Quark/UC HTTP 412 hotlink self-healing; Baidu triple-fallback (filemetas → locatedownload → OAuth); Quark sign-in for free storage
 
-**Install**: install [Tampermonkey](https://www.tampermonkey.net/) → open the raw `CloudLink-Master-Pro.user.js` → confirm → open any supported drive page (floating ball at bottom-right, `Alt + D` to toggle).
+**Install**: install [Tampermonkey](https://www.tampermonkey.net/) → one-click install via the [raw script link](https://raw.githubusercontent.com/CZY1326/CloudLink-Master-Pro/main/CloudLink-Master-Pro.user.js) (Tampermonkey opens the confirm page automatically), or open the [repo file page](https://github.com/CZY1326/CloudLink-Master-Pro/blob/main/CloudLink-Master-Pro.user.js) → click **Raw** → confirm → open any supported drive page (floating ball at bottom-right, `Alt + D` to toggle).
 
 ### 2. Gopeed Native Extension
 
